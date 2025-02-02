@@ -39,7 +39,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.21153, 0)
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="Node3D"]
 script = ExtResource("1_yuqvq")
-SPEED = 1.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/CharacterBody3D"]
 shape = SubResource("CapsuleShape3D_tchah")

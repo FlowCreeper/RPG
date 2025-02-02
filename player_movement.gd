@@ -1,11 +1,11 @@
 extends CharacterBody3D
 
-@export var SPEED = 4.0
+@export var SPEED = 1.0
 var target_position: Vector3
 var moving = false
 
 func _unhandled_input(event: InputEvent):
-	if Input.is_action_pressed("Walk"):
+	if event is InputEventMouse and Input.is_action_pressed("Walk", true):
 		var space_state = get_world_3d().direct_space_state
 		var from = get_viewport().get_camera_3d().project_ray_origin(event.position)
 		var to = from + get_viewport().get_camera_3d().project_ray_normal(event.position) * 1000
@@ -14,7 +14,6 @@ func _unhandled_input(event: InputEvent):
 
 		if result:
 			target_position = result.position
-			target_position.y *= -1
 			moving = true
 
 func _physics_process(delta):
@@ -25,7 +24,7 @@ func _physics_process(delta):
 		var direction = (target_position - position).normalized()
 		velocity = velocity.lerp(direction * SPEED, 0.1)  # Faz a velocidade mudar suavemente
 
-		if position.distance_to(target_position) < 0.1:  # Parar ao chegar
+		if position.distance_to(target_position) < 0.75:  # Parar ao chegar
 			velocity = Vector3.ZERO
 			moving = false
 
