@@ -7,7 +7,8 @@ var dir: Vector3
 var velocity: Vector3
 var cam_rotation = int(0) 
 
-
+func  _ready() -> void:
+	$Camera3D
 func _process(delta: float) -> void:
 	smooth_rotation = smooth_rotation.lerp(target_rotation, delta * 10)
 	rotation = smooth_rotation
@@ -85,4 +86,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			dir.x = 0 
 	if Input.is_action_just_pressed("ZoomIn"):
-		pass
+		
+		
+		if !$Camera3D.position.x > -0.75:
+			$Camera3D.position.x += 0.05
+			$Camera3D.position.y -= 0.05
+		   
+	if Input.is_action_just_pressed("ZoomOut"):
+		if !$Camera3D.position.x < -1:
+			$Camera3D.position.x -= 0.05
+			$Camera3D.position.y += 0.05
