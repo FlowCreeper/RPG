@@ -5,7 +5,7 @@ var target_position: Vector3
 var moving = false
 
 func _unhandled_input(event: InputEvent):
-	if event is InputEventMouse and Input.is_action_pressed("Walk", true):
+	if event is InputEventMouse and Input.is_action_pressed("Walk"):
 		var space_state = get_world_3d().direct_space_state
 		var from = get_viewport().get_camera_3d().project_ray_origin(event.position)
 		var to = from + get_viewport().get_camera_3d().project_ray_normal(event.position) * 1000
