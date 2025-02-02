@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://buo4m5c87fp0x"]
+
+[ext_resource type="Script" path="res://gymbal.gd" id="1_ig2np"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ntpkl"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_djium"]
+
+[sub_resource type="Environment" id="Environment_opicg"]
+background_mode = 1
+background_color = Color(0.237673, 0.141883, 0.0195462, 1)
+ambient_light_color = Color(0.432483, 0.306509, 0.102453, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_ntpkl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
+mesh = SubResource("BoxMesh_djium")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.851709, 0, 0.524016, -0.108341, 0.978394, 0.176091, -0.512694, -0.206751, 0.833306, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_opicg")
+
+[node name="Gymbal" type="Node3D" parent="."]
+script = ExtResource("1_ig2np")
+Speed = 3.0
+
+[node name="Camera3D" type="Camera3D" parent="Gymbal"]
+transform = Transform3D(-4.37114e-08, 0.34202, -0.939693, 0, 0.939693, 0.34202, 1, 1.49502e-08, -4.10753e-08, -1, 1, 0)
