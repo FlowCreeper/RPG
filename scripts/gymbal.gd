@@ -86,8 +86,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			dir.x = 0 
 	if Input.is_action_just_pressed("ZoomIn"):
-		
-		
 		if !$Camera3D.position.x > -0.75:
 			$Camera3D.position.x += 0.05
 			$Camera3D.position.y -= 0.05
