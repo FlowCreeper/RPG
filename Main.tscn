@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://buo4m5c87fp0x"]
+[gd_scene load_steps=8 format=3 uid="uid://buo4m5c87fp0x"]
 
+[ext_resource type="Texture2D" uid="uid://cdfapig0dm1xn" path="res://3x.png" id="1_bpl68"]
 [ext_resource type="Script" path="res://gymbal.gd" id="1_ig2np"]
+[ext_resource type="Script" path="res://player_movement.gd" id="1_yuqvq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ntpkl"]
 
@@ -11,9 +13,14 @@ background_mode = 1
 background_color = Color(0.237673, 0.141883, 0.0195462, 1)
 ambient_light_color = Color(0.432483, 0.306509, 0.102453, 1)
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tchah"]
+radius = 0.0698325
+height = 0.318177
+
 [node name="Node3D" type="Node3D"]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("BoxShape3D_ntpkl")
@@ -27,9 +34,24 @@ transform = Transform3D(0.851709, 0, 0.524016, -0.108341, 0.978394, 0.176091, -0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_opicg")
 
-[node name="Gymbal" type="Node3D" parent="."]
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.21153, 0)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="Node3D"]
+script = ExtResource("1_yuqvq")
+SPEED = 1.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_tchah")
+
+[node name="Sprite3D" type="Sprite3D" parent="Node3D/CharacterBody3D"]
+transform = Transform3D(-5.24894e-09, 0, -1, 0, 0.278856, 0, 0.120082, 0, -4.37114e-08, 0, 0, 0)
+texture = ExtResource("1_bpl68")
+
+[node name="Gymbal" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 script = ExtResource("1_ig2np")
 Speed = 3.0
 
-[node name="Camera3D" type="Camera3D" parent="Gymbal"]
+[node name="Camera3D" type="Camera3D" parent="Node3D/Gymbal"]
 transform = Transform3D(-4.37114e-08, 0.34202, -0.939693, 0, 0.939693, 0.34202, 1, 1.49502e-08, -4.10753e-08, -1, 1, 0)
