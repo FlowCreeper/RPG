@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://buo4m5c87fp0x"]
+[gd_scene load_steps=6 format=3 uid="uid://buo4m5c87fp0x"]
 
-[ext_resource type="Script" path="res://gymbal.gd" id="1_ig2np"]
+[ext_resource type="Script" path="res://scripts/gymbal.gd" id="1_41j0i"]
+[ext_resource type="PackedScene" uid="uid://nl6fgamtscm4" path="res://scenes/Hud.tscn" id="2_o886d"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ntpkl"]
 
@@ -28,8 +29,10 @@ transform = Transform3D(0.851709, 0, 0.524016, -0.108341, 0.978394, 0.176091, -0
 environment = SubResource("Environment_opicg")
 
 [node name="Gymbal" type="Node3D" parent="."]
-script = ExtResource("1_ig2np")
+script = ExtResource("1_41j0i")
 Speed = 3.0
 
 [node name="Camera3D" type="Camera3D" parent="Gymbal"]
 transform = Transform3D(-4.37114e-08, 0.34202, -0.939693, 0, 0.939693, 0.34202, 1, 1.49502e-08, -4.10753e-08, -1, 1, 0)
+
+[node name="CanvasLayer" parent="." instance=ExtResource("2_o886d")]

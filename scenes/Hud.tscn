@@ -1,0 +1,73 @@
+[gd_scene load_steps=2 format=3 uid="uid://nl6fgamtscm4"]
+
+[ext_resource type="Texture2D" uid="uid://dh0htxsfpog68" path="res://ui/HotBarSlot.png" id="1_an2mo"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(107, 0)
+layout_mode = 2
+texture = ExtResource("1_an2mo")
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(107, 0)
+layout_mode = 2
+texture = ExtResource("1_an2mo")
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(107, 0)
+layout_mode = 2
+texture = ExtResource("1_an2mo")
+
+[node name="TextureRect4" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(107, 0)
+layout_mode = 2
+texture = ExtResource("1_an2mo")
+
+[node name="TextureRect5" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(107, 0)
+layout_mode = 2
+texture = ExtResource("1_an2mo")
+
+[node name="TextureRect6" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(107, 0)
+layout_mode = 2
+texture = ExtResource("1_an2mo")
+
+[node name="TextureRect7" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(107, 0)
+layout_mode = 2
+texture = ExtResource("1_an2mo")
