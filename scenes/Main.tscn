@@ -1,33 +1,55 @@
-[gd_scene load_steps=9 format=3 uid="uid://buo4m5c87fp0x"]
+[gd_scene load_steps=11 format=3 uid="uid://buo4m5c87fp0x"]
 
 [ext_resource type="Script" path="res://scripts/gymbal.gd" id="1_41j0i"]
-[ext_resource type="Texture2D" uid="uid://cdfapig0dm1xn" path="res://ui/3x.png" id="1_bpl68"]
-[ext_resource type="Script" path="res://scripts/player_movement.gd" id="1_yuqvq"]
+[ext_resource type="PackedScene" uid="uid://bo57d4s7wu4ip" path="res://scenes/Player.tscn" id="1_hvq7m"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_jhgrx"]
 [ext_resource type="PackedScene" uid="uid://nl6fgamtscm4" path="res://scenes/Hud.tscn" id="2_o886d"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ntpkl"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_qi8kg"]
+vertices = PackedVector3Array(2, 1, -3.25, 2.25, 1, -2.75, 4.5, 1, -2.5, 4.5, 1, -4.5, -1.75, 1, -3.25, -4.5, 1, -4.5, -4.5, 1, -1.5, -2, 1, -1.5, -1.75, 1, -1, -4.5, 1, 4.5, 2, 1, -1, 4.5, 1, 4.5)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(0, 4, 3), PackedInt32Array(3, 4, 5), PackedInt32Array(7, 6, 4), PackedInt32Array(4, 6, 5), PackedInt32Array(7, 8, 6), PackedInt32Array(6, 8, 9), PackedInt32Array(1, 2, 10), PackedInt32Array(10, 2, 11), PackedInt32Array(10, 11, 8), PackedInt32Array(8, 11, 9)]
 
 [sub_resource type="BoxMesh" id="BoxMesh_djium"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ntpkl"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o5u13"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7wsxv"]
+size = Vector3(3, 1, 1)
 
 [sub_resource type="Environment" id="Environment_opicg"]
 background_mode = 1
 background_color = Color(0.237673, 0.141883, 0.0195462, 1)
 ambient_light_color = Color(0.432483, 0.306509, 0.102453, 1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tchah"]
-radius = 0.0698325
-height = 0.318177
-
 [node name="Node3D" type="Node3D"]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="Node" type="Node" parent="."]
+script = ExtResource("1_jhgrx")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_qi8kg")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D"]
 collision_layer = 3
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D"]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("BoxMesh_djium")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_ntpkl")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
-mesh = SubResource("BoxMesh_djium")
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D"]
+transform = Transform3D(3, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.996891, -2.10633)
+mesh = SubResource("BoxMesh_o5u13")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.996891, -2.10633)
+shape = SubResource("BoxShape3D_7wsxv")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.851709, 0, 0.524016, -0.108341, 0.978394, 0.176091, -0.512694, -0.206751, 0.833306, 0, 0, 0)
@@ -35,18 +57,7 @@ transform = Transform3D(0.851709, 0, 0.524016, -0.108341, 0.978394, 0.176091, -0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_opicg")
 
-[node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.21153, 0)
-
-[node name="CharacterBody3D" type="CharacterBody3D" parent="Node3D"]
-script = ExtResource("1_yuqvq")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/CharacterBody3D"]
-shape = SubResource("CapsuleShape3D_tchah")
-
-[node name="Sprite3D" type="Sprite3D" parent="Node3D/CharacterBody3D"]
-transform = Transform3D(-5.24894e-09, 0, -1, 0, 0.278856, 0, 0.120082, 0, -4.37114e-08, 0, 0, 0)
-texture = ExtResource("1_bpl68")
+[node name="Player" parent="." instance=ExtResource("1_hvq7m")]
 
 [node name="CanvasLayer" parent="." instance=ExtResource("2_o886d")]
 
@@ -55,4 +66,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21153, 0)
 script = ExtResource("1_41j0i")
 
 [node name="Camera3D" type="Camera3D" parent="Gymbal"]
-transform = Transform3D(-4.37114e-08, 0.34202, -0.939693, 0, 0.939693, 0.34202, 1, 1.49502e-08, -4.10753e-08, -1, 1, 0)
+transform = Transform3D(-4.37114e-08, 0.766045, -0.642788, 0, 0.642788, 0.766045, 1, 3.34849e-08, -2.80971e-08, -6, 4, 0)
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/Multiplayer_Player.tscn")
+spawn_path = NodePath("../Players")
+spawn_limit = 4
+
+[node name="Players" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56416, 0)

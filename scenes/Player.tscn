@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bo57d4s7wu4ip"]
+
+[ext_resource type="Script" path="res://scripts/player_movement.gd" id="1_iaxjh"]
+[ext_resource type="Texture2D" uid="uid://cdfapig0dm1xn" path="res://ui/3x.png" id="2_k3td3"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tchah"]
+radius = 0.0698325
+height = 0.318177
+
+[node name="Player" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+script = ExtResource("1_iaxjh")
+SPEED = 5.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_tchah")
+
+[node name="Sprite3D" type="Sprite3D" parent="CharacterBody3D"]
+transform = Transform3D(-5.24894e-09, 0, -1, 0, 0.278856, 0, 0.120082, 0, -4.37114e-08, 0, 0, 0)
+texture = ExtResource("2_k3td3")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="CharacterBody3D"]
+path_desired_distance = 0.5
+target_desired_distance = 0.5
+debug_enabled = true
