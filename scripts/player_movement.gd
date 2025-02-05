@@ -7,6 +7,7 @@ var initial_position: Vector3
 @onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
 var next_path
 
+
 func _unhandled_input(event: InputEvent):
 	if event is InputEventMouse and Input.is_action_pressed("Walk"):
 		var space_state = get_world_3d().direct_space_state

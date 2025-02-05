@@ -7,22 +7,19 @@
 radius = 0.0698325
 height = 0.318177
 
-[node name="Player" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+[node name="CharacterBody3D" type="CharacterBody3D"]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 script = ExtResource("1_iaxjh")
 SPEED = 5.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_tchah")
 
-[node name="Sprite3D" type="Sprite3D" parent="CharacterBody3D"]
+[node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(-5.24894e-09, 0, -1, 0, 0.278856, 0, 0.120082, 0, -4.37114e-08, 0, 0, 0)
 texture = ExtResource("2_k3td3")
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="CharacterBody3D"]
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 path_desired_distance = 0.5
 target_desired_distance = 0.5
 debug_enabled = true
