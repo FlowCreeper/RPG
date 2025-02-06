@@ -12,18 +12,13 @@ func _ready() -> void:
 		set_process_unhandled_input(false)
 		set_physics_process(false)
 		set_process(false)
-		return  # Exit early if not the authority
+		 # Exit early if not the authority
 
 	mouse = Input.is_action_pressed("Walk")
 
-func _unhandled_input(event: InputEvent) -> void:
-	player.navigation_agent_3d.set_target_position(player.target_position)
-
-func _physics_process(delta: float) -> void:
+func _unhandled_input(_event: InputEvent) -> void:
 	mouse = Input.is_action_pressed("Walk")
-	
-	if id != 1:
-		print(id)
 
-func _process(delta: float) -> void:
+
+func _process(_delta: float) -> void:
 	pass

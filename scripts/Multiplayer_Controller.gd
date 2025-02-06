@@ -30,10 +30,10 @@ func apply_movement(delta: float) -> void:
 	
 	move_and_slide()
 
-@rpc("any_peer", "reliable") # Allows clients to send input to the server
+@rpc("any_peer", "reliable", "call_local") # Allows clients to send input to the server
 func request_move(event_position: Vector2) -> void:
-	if not multiplayer.is_server():
-		return  # Only the server should process movement
+	if  not multiplayer.is_server():
+		return # Only the server should process movement
 
 	var space_state = get_world_3d().direct_space_state
 	var from: Vector3 = camera.project_ray_origin(event_position)
@@ -46,7 +46,7 @@ func request_move(event_position: Vector2) -> void:
 		navigation_agent_3d.set_target_position(target_position)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
+	if event is InputEventMouse and %InputSynchronizer.mouse:
 		if multiplayer.is_server():
 			request_move(event.position)
 		else:
