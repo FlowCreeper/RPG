@@ -11,7 +11,7 @@ func _process(delta: float) -> void:
 	smooth_rotation = smooth_rotation.lerp(target_rotation, delta * 10)
 	rotation = smooth_rotation
 	velocity += Speed * dir * delta
-	position = velocity
+	global_position = velocity
 
 func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("RotateCamL"):

@@ -5,16 +5,23 @@ extends CharacterBody3D
 	set(id):
 		player_id = id
 		%InputSynchronizer.set_multiplayer_authority(id)
-
-var target_position: Vector3
+@onready var camera: Camera3D = null
+@export var target_position: Vector3
 var moving: bool = false
 var initial_position: Vector3
 var next_path: Vector3
 var mouse_click: bool
+var result
 
 @onready var navigation_agent_3d: NavigationAgent3D = $NavigationAgent3D
-@onready var camera: Camera3D = get_tree().get_current_scene().get_node("Gymbal").get_child(0)
 
+func _ready() -> void:
+	if is_multiplayer_authority():
+		camera = $Gymbal/Camera3D
+	if multiplayer.get_unique_id() == player_id:
+		$Gymbal/Camera3D.make_current()
+	else:
+		$Gymbal/Camera3D.set_process(false)
 func apply_movement(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -29,29 +36,36 @@ func apply_movement(delta: float) -> void:
 			moving = false
 	
 	move_and_slide()
-
-@rpc("any_peer", "reliable", "call_local") # Allows clients to send input to the server
-func request_move(event_position: Vector2) -> void:
+func ray_cast(event_position):
+	var space_state = get_world_3d().direct_space_state
+	var from = $Gymbal/Camera3D.project_ray_origin(event_position)
+	var to = from + $Gymbal/Camera3D.project_ray_normal(event_position) * 1000
+	result = space_state.intersect_ray(PhysicsRayQueryParameters3D.create(from, to, 2))
+@rpc("any_peer", "reliable") # Allows clients to send input to the server
+func request_move(result) -> void:
 	if  not multiplayer.is_server():
 		return # Only the server should process movement
-
-	var space_state = get_world_3d().direct_space_state
-	var from: Vector3 = camera.project_ray_origin(event_position)
-	var to: Vector3 = from + camera.project_ray_normal(event_position) * 1000
-	var result: Dictionary = space_state.intersect_ray(PhysicsRayQueryParameters3D.create(from, to, 2))
-
+	if not camera:
+		return
+	#var space_state = get_world_3d().direct_space_state
+	#var from: Vector3 = $/Gymbal/Camera3D.project_ray_origin(event_position)
+	#var to: Vector3 = from + $/Gymbal/Camera3D.project_ray_normal(event_position) * 1000
+	#var result: Dictionary = space_state.intersect_ray(PhysicsRayQueryParameters3D.create(from, to, 2))
+	
 	if result:
 		target_position = result.position
 		moving = true
 		navigation_agent_3d.set_target_position(target_position)
-
+		
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouse and %InputSynchronizer.mouse:
+		ray_cast(event.position)
 		if multiplayer.is_server():
-			request_move(event.position)
+			request_move(result)
 		else:
-			request_move.rpc_id(1, event.position)  # Send input to the server
+			request_move.rpc_id(1,result)  # Send input to the server
 
 func _physics_process(delta: float) -> void:
+	
 	if multiplayer.is_server():
 		apply_movement(delta)

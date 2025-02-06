@@ -16,7 +16,7 @@ func become_host():
 	multiplayer.peer_connected.connect(_add_player_to_game)
 	multiplayer.peer_disconnected.connect(_del_player)
 	remove_singleplayer()
-	
+	remove_camera()
 	_add_player_to_game(1)
 func join_game():
 	print("joining")
@@ -26,14 +26,14 @@ func join_game():
 	
 	multiplayer.multiplayer_peer = client_peer
 	remove_singleplayer()
-	
+	remove_camera()
 func _add_player_to_game(id: int):
 	print("Player %s has connected" % id)
 	
 	var player_to_add = multiplayer_scene.instantiate()
 	player_to_add.player_id = id
 	player_to_add.name = str(id)
-	
+	#get_node("/root/players/1/Gymbal/Camera3D").name = "Camera %s" %player_to_add.player_id
 	_player_spawn_node.add_child(player_to_add, true)
 func _del_player(id: int):
 	print("Player %s has disconnected" % id)
@@ -46,3 +46,6 @@ func remove_singleplayer():
 	print("Singleplayer Removed")
 	var player_to_remove = get_tree().get_current_scene().get_node("Player")
 	player_to_remove.queue_free()
+func remove_camera():
+	
+	get_tree().get_current_scene().get_node("Gymbal").queue_free()

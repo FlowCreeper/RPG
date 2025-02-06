@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c8oj0bjxo2u8g"]
+[gd_scene load_steps=8 format=3 uid="uid://c8oj0bjxo2u8g"]
 
 [ext_resource type="Script" path="res://scripts/Multiplayer_Controller.gd" id="1_1y38q"]
-[ext_resource type="Script" path="res://scenes/Multiplayer_Input.gd" id="2_4c55g"]
+[ext_resource type="Script" path="res://scripts/Multiplayer_Input.gd" id="2_4c55g"]
 [ext_resource type="Texture2D" uid="uid://cdfapig0dm1xn" path="res://ui/3x.png" id="2_rk578"]
+[ext_resource type="Script" path="res://scripts/gymbal.gd" id="4_8mhd1"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fwfp1"]
 properties/0/path = NodePath(".:player_id")
@@ -11,9 +12,6 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:position")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath(".:next_path")
-properties/2/spawn = true
-properties/2/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7cgek"]
 properties/0/path = NodePath("InputSynchronizer:mouse")
@@ -21,11 +19,10 @@ properties/0/spawn = true
 properties/0/replication_mode = 1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tchah"]
-radius = 0.0698325
-height = 0.318177
+radius = 0.35
+height = 1.59
 
 [node name="MultiplayerPlayer" type="CharacterBody3D"]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 script = ExtResource("1_1y38q")
 SPEED = 5.0
 
@@ -41,10 +38,17 @@ script = ExtResource("2_4c55g")
 shape = SubResource("CapsuleShape3D_tchah")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(-5.24894e-09, 0, -1, 0, 0.278856, 0, 0.120082, 0, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(-2.62268e-08, 0, -1, 0, 1.2, 0, 0.6, 0, -4.37114e-08, 0, 0, 0)
 texture = ExtResource("2_rk578")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 path_desired_distance = 0.5
 target_desired_distance = 0.5
 debug_enabled = true
+
+[node name="Gymbal" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21153, 0)
+script = ExtResource("4_8mhd1")
+
+[node name="Camera3D" type="Camera3D" parent="Gymbal"]
+transform = Transform3D(-4.37114e-08, 0.766045, -0.642788, 0, 0.642788, 0.766045, 1, 3.34849e-08, -2.80971e-08, -6, 10, 0)
